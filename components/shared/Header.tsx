@@ -2,7 +2,6 @@
 import React from 'react';
 import { useTheme } from 'next-themes';
 import { Github, Moon, Sun } from 'lucide-react';
-import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import Link from 'next/link';
 
@@ -17,7 +16,7 @@ export const Header: React.FC = () => {
 
                 <nav className="flex items-center space-x-4">
                     <Link
-                        href="https://github.com/your-repo"
+                        href="https://github.com/hessennasser"
                         aria-label="GitHub repository"
                         className="text-white"
                     >

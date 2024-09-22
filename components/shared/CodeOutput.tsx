@@ -18,7 +18,7 @@ export const CodeOutput: React.FC<CodeOutputProps> = ({
     downloadCode,
     copied
 }) => {
-    const { theme, setTheme } = useTheme();
+    const { theme } = useTheme();
     const isDarkMode = theme === 'dark';
 
     return (

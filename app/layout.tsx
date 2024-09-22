@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     url: 'https://your-website.com',
     images: [
       {
-        url: '/og-image.jpg',
+        url: 'https://i.ibb.co/6Xswcnj/69dcaab0-469d-48d5-9fbe-1297fe04897c.png',
         alt: 'GridCraft Open Graph Image',
       },
     ],
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'GridCraft - CSS Grid Generator',
     description: 'Create and customize CSS grids easily with GridCraft.',
-    images: '/twitter-image.jpg',
+    images: 'https://i.ibb.co/6Xswcnj/69dcaab0-469d-48d5-9fbe-1297fe04897c.png',
   },
   viewport: {
     width: 'device-width',
@@ -40,9 +40,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={inter.className}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
-        <body className="min-h-screen flex flex-col bg-gradient-to-r from-purple-600 to-blue-800 text-white">
+        <body className="min-h-screen flex flex-col text-white">
           <Header />
-          <main className="flex-grow container mx-auto p-4 z">
+          <main className="flex-grow">
             {children}
           </main>
           <Footer />
