@@ -6,9 +6,14 @@ import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import { ColorPicker, IColor } from 'react-color-palette';
 import "react-color-palette/css";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 type CodeType = 'css' | 'tailwind' | 'bootstrap';
-type ResponsiveBreakpoint = 'sm' | 'md' | 'lg' | 'xl';
+type Breakpoint = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+
+interface ResponsiveSettings {
+    [key: string]: { columns: number; rows: number };
+}
 
 interface GridSettingsProps {
     rows: number;
@@ -19,14 +24,13 @@ interface GridSettingsProps {
     setGap: (value: number) => void;
     codeType: CodeType;
     setCodeType: (value: CodeType) => void;
-    responsiveBreakpoint: ResponsiveBreakpoint;
-    setResponsiveBreakpoint: (value: ResponsiveBreakpoint) => void;
     cellColor: string;
     setCellColor: (value: string) => void;
     customClass: string;
     setCustomClass: (value: string) => void;
-    isResponsive: boolean;
-    setIsResponsive: (value: boolean) => void;
+    responsiveSettings: ResponsiveSettings;
+    setResponsiveSettings: (value: ResponsiveSettings) => void;
+    breakpoints: Breakpoint[];
 }
 
 export const GridSettings: React.FC<GridSettingsProps> = ({
@@ -38,14 +42,13 @@ export const GridSettings: React.FC<GridSettingsProps> = ({
     setGap,
     codeType,
     setCodeType,
-    responsiveBreakpoint,
-    setResponsiveBreakpoint,
     cellColor,
     setCellColor,
     customClass,
     setCustomClass,
-    isResponsive,
-    setIsResponsive
+    responsiveSettings,
+    setResponsiveSettings,
+    breakpoints
 }) => {
     const [showColorPicker, setShowColorPicker] = useState(false);
 
@@ -55,14 +58,8 @@ export const GridSettings: React.FC<GridSettingsProps> = ({
         const b = parseInt(hex.slice(5, 7), 16);
         return {
             hex,
-            rgb: {
-                r, g, b,
-                a: 1
-            },
-            hsv: {
-                h: 0, s: 0, v: 0,
-                a: 1
-            },
+            rgb: { r, g, b, a: 1 },
+            hsv: { h: 0, s: 0, v: 0, a: 1 },
         };
     };
 
@@ -71,6 +68,16 @@ export const GridSettings: React.FC<GridSettingsProps> = ({
     const handleColorChange = (color: IColor) => {
         setColor(color);
         setCellColor(color.hex);
+    };
+
+    const handleResponsiveSettingChange = (breakpoint: Breakpoint, property: 'columns' | 'rows', value: number) => {
+        setResponsiveSettings({
+            ...responsiveSettings,
+            [breakpoint]: {
+                ...responsiveSettings[breakpoint],
+                [property]: value
+            }
+        });
     };
 
     return (
@@ -117,31 +124,36 @@ export const GridSettings: React.FC<GridSettingsProps> = ({
                         </SelectContent>
                     </Select>
                 </div>
-                <div className="flex items-center space-x-2">
-                    <Switch
-                        id="responsive-mode"
-                        checked={isResponsive}
-                        onCheckedChange={setIsResponsive}
-                        className="bg-white dark:bg-gray-700"
-                    />
-                    <Label htmlFor="responsive-mode">Responsive Mode</Label>
-                </div>
-                {isResponsive && (
-                    <div className="space-y-2">
-                        <Label>Responsive Breakpoint</Label>
-                        <Select onValueChange={setResponsiveBreakpoint} defaultValue={responsiveBreakpoint}>
-                            <SelectTrigger>
-                                <SelectValue placeholder="Select breakpoint" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="sm">sm</SelectItem>
-                                <SelectItem value="md">md</SelectItem>
-                                <SelectItem value="lg">lg</SelectItem>
-                                <SelectItem value="xl">xl</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                )}
+                <Accordion type="single" className="w-full" defaultValue={"responsive-settings"}>
+                    <AccordionItem value="responsive-settings">
+                        <AccordionTrigger>Responsive Settings</AccordionTrigger>
+                        <AccordionContent>
+                            {breakpoints.map((breakpoint) => (
+                                <div key={breakpoint} className="mb-4">
+                                    <h3 className="text-lg font-semibold mb-2">{breakpoint} Breakpoint</h3>
+                                    <div className="space-y-2">
+                                        <Label>Columns: {responsiveSettings[breakpoint].columns}</Label>
+                                        <Slider
+                                            value={[responsiveSettings[breakpoint].columns]}
+                                            onValueChange={(value) => handleResponsiveSettingChange(breakpoint, 'columns', value[0])}
+                                            max={12}
+                                            step={1}
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <Label>Rows: {responsiveSettings[breakpoint].rows}</Label>
+                                        <Slider
+                                            value={[responsiveSettings[breakpoint].rows]}
+                                            onValueChange={(value) => handleResponsiveSettingChange(breakpoint, 'rows', value[0])}
+                                            max={12}
+                                            step={1}
+                                        />
+                                    </div>
+                                </div>
+                            ))}
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
                 <div className="space-y-2">
                     <Label>Cell Color</Label>
                     <div className="flex items-center space-x-2">
@@ -164,7 +176,7 @@ export const GridSettings: React.FC<GridSettingsProps> = ({
                     )}
                 </div>
                 <div className="space-y-2">
-                    <Label>Custom Class</Label>
+                    <Label>Custom Class <span className='text-green-500 text-xs'>{"(Added on Tailwind & Bootstrap)"}</span></Label>
                     <Input
                         value={customClass}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCustomClass(e.target.value)}

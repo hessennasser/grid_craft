@@ -40,7 +40,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={inter.className}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
-        <body className="min-h-screen flex flex-col text-white">
+        <body className="min-h-screen flex flex-col text-white relative">
           <Header />
           <main className="flex-grow">
             {children}
