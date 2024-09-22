@@ -37,9 +37,9 @@ export const Header: React.FC = () => {
                             />
                         </Switch>
                         {isDarkMode ? (
-                            <Moon className="h-5 w-5 text-gray-400 dark:text-gray-200" aria-label="Dark mode icon" />
+                            <Moon className="h-5 w-5 text-gray-200" aria-label="Dark mode icon" />
                         ) : (
-                            <Sun className="h-5 w-5 text-gray-400 dark:text-gray-200" aria-label="Light mode icon" />
+                                <Sun className="h-5 w-5 text-gray-600" aria-label="Light mode icon" />
                         )}
                     </div>
                 </nav>
