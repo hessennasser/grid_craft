@@ -83,7 +83,7 @@ export const GridSettings: React.FC<GridSettingsProps> = ({
     return (
         <div className="space-y-6">
             <h2 className="text-2xl font-semibold mb-4">Grid Settings</h2>
-            <div className="space-y-4">
+            <div className="space-y-6">
                 <div className="space-y-2">
                     <Label>Rows: {rows}</Label>
                     <Slider
@@ -131,23 +131,25 @@ export const GridSettings: React.FC<GridSettingsProps> = ({
                             {breakpoints.map((breakpoint) => (
                                 <div key={breakpoint} className="mb-4">
                                     <h3 className="text-lg font-semibold mb-2">{breakpoint} Breakpoint</h3>
-                                    <div className="space-y-2">
-                                        <Label>Columns: {responsiveSettings[breakpoint].columns}</Label>
-                                        <Slider
-                                            value={[responsiveSettings[breakpoint].columns]}
-                                            onValueChange={(value) => handleResponsiveSettingChange(breakpoint, 'columns', value[0])}
-                                            max={12}
-                                            step={1}
-                                        />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label>Rows: {responsiveSettings[breakpoint].rows}</Label>
-                                        <Slider
-                                            value={[responsiveSettings[breakpoint].rows]}
-                                            onValueChange={(value) => handleResponsiveSettingChange(breakpoint, 'rows', value[0])}
-                                            max={12}
-                                            step={1}
-                                        />
+                                    <div className="flex flex-col gap-4">
+                                        <div className="space-y-2">
+                                            <Label>Columns: {responsiveSettings[breakpoint].columns}</Label>
+                                            <Slider
+                                                value={[responsiveSettings[breakpoint].columns]}
+                                                onValueChange={(value) => handleResponsiveSettingChange(breakpoint, 'columns', value[0])}
+                                                max={12}
+                                                step={1}
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label>Rows: {responsiveSettings[breakpoint].rows}</Label>
+                                            <Slider
+                                                value={[responsiveSettings[breakpoint].rows]}
+                                                onValueChange={(value) => handleResponsiveSettingChange(breakpoint, 'rows', value[0])}
+                                                max={12}
+                                                step={1}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             ))}

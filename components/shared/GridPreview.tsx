@@ -60,7 +60,7 @@ export const GridPreview: React.FC<GridPreviewProps> = ({
     // };
 
     return (
-        <div className='lg:sticky lg:top-20 h-fit'>
+        <div className='lg:sticky lg:top-28 h-fit'>
             <h2 className="text-2xl font-semibold mb-4">Grid Preview</h2>
             <div className={`p-4 rounded-lg ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
                 <div
